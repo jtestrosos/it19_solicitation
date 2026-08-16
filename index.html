@@ -35,7 +35,7 @@
     <section class="section about" id="about">
         <div class="container">
             <div class="section-header">
-                <h2>About the Tour</h2>
+                <h2 class="text-outline">About the Tour</h2>
                 <div class="line"></div>
             </div>
             <div class="about-grid">
@@ -80,10 +80,9 @@
                 <p class="highlight-text">I am asking for your generous support. I don't offer tangible perks in
                     return—just my deepest gratitude and the promise to make the most of this learning experience.</p>
             </div>
-            <div class="image-content">
-                <div class="image-placeholder">
-                    <span>(Tour / Tech Image Placeholder)</span>
-                </div>
+            <div class="image-content carousel-container">
+                <img id="carousel-image" src="images/donatee/PXL_20260725_140421293.jpg" alt="James T. Estrosos"
+                    class="donatee-image">
             </div>
         </div>
     </section>
@@ -92,8 +91,8 @@
     <section class="section donate" id="donate">
         <div class="container">
             <div class="section-header center">
-                <h2>Support My Journey</h2>
-                <p>Every contribution brings me one step closer to my ₱30,000 goal for the Manila tour. Scan the QR code
+                <h2 class="text-outline">Support My Journey</h2>
+                <p class="text-outline">Every contribution brings me one step closer to my ₱30,000 goal for the Manila tour. Scan the QR code
                     or use the number below to send your support.</p>
                 <div class="line center"></div>
             </div>
@@ -108,13 +107,20 @@
                     </div>
 
                     <div class="qr-placeholder">
-                        <img id="qr-image" src="images/gcash cropped.png" alt="Scan to Donate with GCash"
-                            style="width: 200px; height: 200px; margin: 0 auto 1rem; display: block;">
+                        <img id="qr-image" src="images/QR/gcash_cropped.png" alt="Scan to Donate with GCash"
+                            style="width: 160px; height: 160px; margin: 0 auto 0.5rem; display: block;">
                     </div>
 
                     <div class="phone-number">
                         <p id="payment-prompt">Or send directly via GCash:</p>
-                        <h2 id="payment-number">0991 217 4280</h2>
+                        <button type="button" class="copy-btn" id="copy-btn" data-raw="09912174280" onclick="copyNumber()" aria-label="Copy phone number">
+                            <h2 id="payment-number">0991 217 4280</h2>
+                            <svg class="copy-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span class="copy-tooltip" id="copy-tooltip">Click to copy</span>
+                        </button>
                         <p class="name" id="account-name">James T. Estrosos</p>
                     </div>
                 </div>
@@ -148,17 +154,19 @@
             gcash: {
                 name: "JA**S E.",
                 number: "0991 217 4280",
+                rawNumber: "09912174280",
                 prompt: "Or send directly via GCash:",
                 // Replace with your actual QR code image path, e.g. "images/gcash-qr.png"
-                qrSrc: "images/gcash cropped.png",
+                qrSrc: "images/QR/gcash_cropped.png",
                 alt: "Scan to Donate with GCash"
             },
             maya: {
                 name: "@jtestrosos",
                 number: "0991 217 4280",
+                rawNumber: "09912174280",
                 prompt: "Or send directly via Maya:",
                 // Replace with your actual QR code image path, e.g. "images/maya-qr.png"
-                qrSrc: "images/maya cropped.png",
+                qrSrc: "images/QR/maya_cropped.png",
                 alt: "Scan to Donate with Maya"
             }
         };
@@ -171,17 +179,64 @@
             document.getElementById('tab-gcash').classList.toggle('active', method === 'gcash');
             document.getElementById('tab-maya').classList.toggle('active', method === 'maya');
 
-            // Update QR code and caption
+            // Update QR code
             const qrImg = document.getElementById('qr-image');
             qrImg.src = data.qrSrc;
             qrImg.alt = data.alt;
-            document.getElementById('qr-caption').textContent = data.caption;
 
             // Update text info
             document.getElementById('payment-prompt').textContent = data.prompt;
             document.getElementById('payment-number').textContent = data.number;
             document.getElementById('account-name').textContent = data.name;
+            
+            // Update raw number for copying
+            document.getElementById('copy-btn').setAttribute('data-raw', data.rawNumber);
+            document.getElementById('copy-tooltip').textContent = "Click to copy";
         }
+
+        function copyNumber() {
+            const btn = document.getElementById('copy-btn');
+            const numberToCopy = btn.getAttribute('data-raw');
+            const tooltip = document.getElementById('copy-tooltip');
+            
+            navigator.clipboard.writeText(numberToCopy).then(() => {
+                tooltip.textContent = "Copied!";
+                setTimeout(() => {
+                    tooltip.textContent = "Click to copy";
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy!', err);
+                tooltip.textContent = "Failed to copy";
+            });
+        }
+
+        // Carousel Logic
+        const carouselImages = [
+            "images/donatee/PXL_20260725_140421293.jpg",
+            "images/donatee/PXL_20251008_110545193.jpg",
+            "images/donatee/PXL_20260814_031807334.jpg"
+        ];
+        let currentImageIndex = 0;
+
+        function updateCarouselImage() {
+            const imgElement = document.getElementById('carousel-image');
+            imgElement.classList.add('flip-out');
+            
+            setTimeout(() => {
+                currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+                imgElement.src = carouselImages[currentImageIndex];
+                
+                imgElement.classList.remove('flip-out');
+                imgElement.classList.add('flip-in');
+                
+                setTimeout(() => {
+                    imgElement.classList.remove('flip-in');
+                }, 500); // Wait for flip-in to complete
+            }, 500); // Wait for flip-out to complete
+        }
+
+        // Start autoplay
+        setInterval(updateCarouselImage, 4000);
     </script>
 </body>
 
