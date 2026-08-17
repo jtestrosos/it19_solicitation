@@ -47,7 +47,7 @@ html {
 
 body {
     font-family: var(--font-body);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../images/bg/6981c251f5c5b623f800b011553762e3 (1).jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../images/bg/6981c251f5c5b623f800b011553762e3.jpg");
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
@@ -78,7 +78,7 @@ a:hover {
 
 .container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -97,7 +97,8 @@ a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-#about, #donate {
+#about,
+#donate {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-color: transparent;
@@ -150,13 +151,14 @@ a:hover {
 }
 
 .btn-secondary {
-    background-color: var(--bg-alt);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
 }
 
 .btn-secondary:hover {
     background-color: #e2e8f0;
+    color: #000000;
     transform: translateY(-2px);
 }
 
@@ -246,6 +248,10 @@ a:hover {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     color: var(--text-main);
     text-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .about-card .icon {
@@ -262,25 +268,33 @@ a:hover {
 
 .about-card p {
     color: var(--text-muted) !important;
+    text-align: justify;
 }
 
 /* ==========================================================================
    Why Help Section
    ========================================================================== */
 .why-help {
-    background-color: var(--bg-alt);
+    /* Background and blur inherited from .section */
+}
+
+.why-help h2,
+.why-help h3,
+.why-help strong {
+    color: #333333;
 }
 
 .layout-split {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
     align-items: center;
 }
 
-.text-content p {
-    color: var(--text-muted);
+.why-help .text-content p {
+    color: #333333;
     margin-bottom: 1rem;
+    text-align: justify;
 }
 
 .check-list {
@@ -300,34 +314,30 @@ a:hover {
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--primary);
+    color: #16a34a;
     font-weight: bold;
 }
 
 .highlight-text {
     padding: 1rem;
     border-left: 4px solid var(--primary);
-    background: #ffffff;
+    background: var(--accent);
     font-style: italic;
-    color: var(--text-main);
+    color: #333333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-top: 1.5rem;
 }
 
 .text-outline {
     color: #ffffff !important;
-    text-shadow: 
-        -1px -1px 0 #000000,
-         1px -1px 0 #000000,
-        -1px  1px 0 #000000,
-         1px  1px 0 #000000,
-         0px  4px 8px rgba(0, 0, 0, 0.8);
 }
 
 .donatee-image {
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: block;
 }
 
@@ -349,23 +359,52 @@ a:hover {
     color: var(--text-main);
 }
 
-.payment-card h2, .payment-card p, .payment-card .name {
+.payment-card h2,
+.payment-card p,
+.payment-card .name {
     color: var(--text-main) !important;
     text-shadow: none;
 }
 
 .payment-tabs {
+    position: relative;
     display: inline-flex;
-    background-color: var(--bg-alt);
+    justify-content: center;
+    background: #ffffff;
     padding: 4px;
     border-radius: 30px;
     margin-bottom: 1rem;
     border: 1px solid var(--border-color);
-    gap: 4px;
+}
+
+.payment-tabs .slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    width: calc(50% - 4px);
+    border-radius: 25px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 0;
+}
+
+.payment-tabs.gcash-active .slider {
+    transform: translateX(0);
+    background-color: #007df1;
+    box-shadow: 0 2px 8px rgba(0, 125, 241, 0.25);
+}
+
+.payment-tabs.maya-active .slider {
+    transform: translateX(100%);
+    background-color: #00c853;
+    box-shadow: 0 2px 8px rgba(0, 200, 83, 0.25);
 }
 
 .tab-btn {
-    background: transparent;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    background: transparent !important;
     border: none;
     outline: none;
     padding: 0.5rem 1.5rem;
@@ -375,7 +414,8 @@ a:hover {
     font-weight: 700;
     color: var(--text-muted);
     cursor: pointer;
-    transition: var(--transition);
+    transition: color 0.3s ease;
+    box-shadow: none !important;
 }
 
 .tab-btn:hover {
@@ -384,16 +424,6 @@ a:hover {
 
 .tab-btn.active {
     color: #ffffff;
-}
-
-#tab-gcash.active {
-    background-color: #007df1;
-    box-shadow: 0 2px 8px rgba(0, 125, 241, 0.25);
-}
-
-#tab-maya.active {
-    background-color: #00c853;
-    box-shadow: 0 2px 8px rgba(0, 200, 83, 0.25);
 }
 
 .qr-placeholder {
@@ -406,9 +436,15 @@ a:hover {
 
 .phone-number h2 {
     font-size: 2rem;
-    color: var(--primary);
+    color: var(--text-main);
     letter-spacing: 1px;
     margin: 0;
+    transition: var(--transition);
+}
+
+.copy-btn:hover h2,
+.copy-btn:active h2 {
+    color: var(--primary) !important;
 }
 
 .copy-btn {
@@ -430,12 +466,17 @@ a:hover {
     background: var(--bg-alt);
 }
 
+.copy-btn:active {
+    transform: scale(0.95);
+}
+
 .copy-icon {
     color: var(--text-muted);
     transition: var(--transition);
 }
 
-.copy-btn:hover .copy-icon {
+.copy-btn:hover .copy-icon,
+.copy-btn:active .copy-icon {
     color: var(--primary);
 }
 
@@ -545,6 +586,7 @@ footer {
         transform: rotateY(-90deg);
         opacity: 0.3;
     }
+
     100% {
         transform: rotateY(0);
         opacity: 1;
@@ -554,22 +596,262 @@ footer {
 /* ==========================================================================
    Media Queries
    ========================================================================== */
-@media (max-width: 768px) {
+
+/* --- Extra-small devices (phones, 480px and below) --- */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero {
+        padding: 1.5rem 0;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+    }
+
+    .tag {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.75rem;
+    }
+
+    .section {
+        padding: 1.5rem 0;
+        min-height: auto;
+        scroll-snap-align: none;
+    }
+
+    .hero {
+        min-height: 100vh;
+        scroll-snap-align: start;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+
     .layout-split {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .donatee-image {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .phone-number h2 {
+        font-size: 1.5rem;
+    }
+
+    .payment-info {
+        max-width: 100%;
+    }
+
+    .payment-card {
+        padding: 1rem;
+    }
+
+    .copy-btn {
+        gap: 8px;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    footer {
+        scroll-snap-align: none;
+    }
+}
+
+/* --- Small devices (large phones / small tablets, 481px to 768px) --- */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
     }
 
     .hero-title {
         font-size: 2.25rem;
     }
 
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
     .hero-actions {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        min-width: 200px;
+    }
+
+    .section {
+        padding: 2rem 0;
+        min-height: auto;
+        scroll-snap-align: none;
+    }
+
+    .hero {
+        min-height: 100vh;
+        scroll-snap-align: start;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .about-card {
+        padding: 1.75rem;
+    }
+
+    .layout-split {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .donatee-image {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .phone-number h2 {
+        font-size: 1.75rem;
     }
 
     .footer-content {
         flex-direction: column;
         text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+    }
+
+    footer {
+        scroll-snap-align: none;
+    }
+}
+
+/* --- Medium devices (tablets, 769px to 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .about-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+
+    .layout-split {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 2rem;
+    }
+}
+
+/* --- Large desktops (1400px and above) --- */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    .about-card {
+        padding: 2.5rem;
+    }
+
+    .layout-split {
+        gap: 4rem;
+    }
+}
+
+/* --- Ultra-wide screens (1800px and above) --- */
+@media (min-width: 1800px) {
+    .container {
+        max-width: 1600px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .hero-content {
+        max-width: 900px;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .about-card {
+        padding: 3rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .phone-number h2 {
+        font-size: 2.25rem;
     }
 }
