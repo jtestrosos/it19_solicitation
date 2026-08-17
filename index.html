@@ -17,8 +17,6 @@
 </head>
 
 <body>
-
-    <!-- estrosos Section -->
     <header class="estrosos" id="home">
         <div class="container estrosos-content">
             <span class="tag">James T. Estrosos • UM BSIT Student</span>
@@ -32,13 +30,12 @@
             </div>
         </div>
         <a href="#about" class="scroll-indicator" aria-label="Scroll down">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
         </a>
     </header>
-
-    <!-- About the Tour -->
     <section class="section about" id="about">
         <div class="container">
             <div class="section-header">
@@ -86,14 +83,13 @@
             </div>
         </div>
     </section>
-
-    <!-- Why We Need Your Help -->
     <section class="section why-help" id="why-help">
         <div class="container layout-split">
             <div class="text-content card">
                 <h2>Why I Need Your Help</h2>
                 <div class="line"></div>
-                <p>I am an IT student here in Davao City. I spend most of my time programming and working with
+                <p>I am an IT student here at the University of Mindanao in Davao City. I spend most of my time
+                    programming and working with
                     computer hardware, but I need to see how these things work outside the classroom. My goal for this
                     Manila trip is to see how the tech I am studying is used by major companies in the real world.</p>
                 <p>To make this trip possible, I need to raise <strong>₱30,000</strong>. Your support will go directly
@@ -113,8 +109,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Donation Section -->
     <section class="section donate" id="donate">
         <div class="container">
             <div class="section-header center">
@@ -126,7 +120,6 @@
             </div>
             <div class="payment-info">
                 <div class="payment-card">
-                    <!-- Method Toggle Tabs -->
                     <div class="payment-tabs gcash-active" id="payment-tabs-container">
                         <div class="slider" id="tab-slider"></div>
                         <button type="button" class="tab-btn active" id="tab-gcash"
@@ -134,12 +127,10 @@
                         <button type="button" class="tab-btn" id="tab-maya"
                             onclick="switchPaymentMethod('maya')">Maya</button>
                     </div>
-
                     <div class="qr-placeholder">
                         <img id="qr-image" src="images/QR/gcash_cropped.png" alt="Scan to Donate with GCash"
                             style="width: 160px; height: 160px; margin: 0 auto 0.5rem; display: block;">
                     </div>
-
                     <div class="phone-number">
                         <p id="payment-prompt">Or send directly via GCash:</p>
                         <button type="button" class="copy-btn" id="copy-btn" data-raw="09912174280"
@@ -158,8 +149,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -179,7 +168,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         const paymentData = {
             gcash: {
@@ -187,7 +175,6 @@
                 number: "0991 217 4280",
                 rawNumber: "09912174280",
                 prompt: "Or send directly via GCash:",
-                // Replace with your actual QR code image path, e.g. "images/gcash-qr.png"
                 qrSrc: "images/QR/gcash_cropped.png",
                 alt: "Scan to Donate with GCash"
             },
@@ -196,41 +183,29 @@
                 number: "0991 217 4280",
                 rawNumber: "09912174280",
                 prompt: "Or send directly via Maya:",
-                // Replace with your actual QR code image path, e.g. "images/maya-qr.png"
                 qrSrc: "images/QR/maya_cropped.png",
                 alt: "Scan to Donate with Maya"
             }
         };
-
         function switchPaymentMethod(method) {
             const data = paymentData[method];
             if (!data) return;
-
-            // Update active tab buttons and slider
             document.getElementById('tab-gcash').classList.toggle('active', method === 'gcash');
             document.getElementById('tab-maya').classList.toggle('active', method === 'maya');
             document.getElementById('payment-tabs-container').className = `payment-tabs ${method}-active`;
-
-            // Update QR code
             const qrImg = document.getElementById('qr-image');
             qrImg.src = data.qrSrc;
             qrImg.alt = data.alt;
-
-            // Update text info
             document.getElementById('payment-prompt').textContent = data.prompt;
             document.getElementById('payment-number').textContent = data.number;
             document.getElementById('account-name').textContent = data.name;
-
-            // Update raw number for copying
             document.getElementById('copy-btn').setAttribute('data-raw', data.rawNumber);
             document.getElementById('copy-tooltip').textContent = "Click to copy";
         }
-
         function copyNumber() {
             const btn = document.getElementById('copy-btn');
             const numberToCopy = btn.getAttribute('data-raw');
             const tooltip = document.getElementById('copy-tooltip');
-
             navigator.clipboard.writeText(numberToCopy).then(() => {
                 tooltip.textContent = "Copied!";
                 setTimeout(() => {
@@ -241,36 +216,27 @@
                 tooltip.textContent = "Failed to copy";
             });
         }
-
-        // Carousel Logic
         const carouselImages = [
             "images/donatee/PXL_20260725_140421293.jpg",
             "images/donatee/PXL_20251008_110545193.jpg",
             "images/donatee/PXL_20260814_031807334.jpg"
         ];
         let currentImageIndex = 0;
-
         function updateCarouselImage() {
             const imgElement = document.getElementById('carousel-image');
             imgElement.classList.add('flip-out');
-
             setTimeout(() => {
                 currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
                 imgElement.src = carouselImages[currentImageIndex];
-
                 imgElement.classList.remove('flip-out');
                 imgElement.classList.add('flip-in');
-
                 setTimeout(() => {
                     imgElement.classList.remove('flip-in');
                 }, 500); // Wait for flip-in to complete
             }, 500); // Wait for flip-out to complete
         }
-
-        // Start autoplay only when the section is visible
         let carouselInterval;
         const whyHelpSection = document.getElementById('why-help');
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -283,12 +249,9 @@
                 }
             });
         }, { threshold: 0.5 }); // Trigger when at least 50% of the section is visible
-
         if (whyHelpSection) {
             observer.observe(whyHelpSection);
         }
-
-        // Always scroll to top on reload
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
